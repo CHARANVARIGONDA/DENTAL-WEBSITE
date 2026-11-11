@@ -1,0 +1,27 @@
+{
+  "name": "ivory-dental-studio",
+  "version": "1.0.0",
+  "description": "Production website for Ivory Dental Studio (Hyderabad)",
+  "main": "index.html",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node scripts/test-site.js",
+    "e2e": "node scripts/e2e-round3.js",
+    "lighthouse": "node scripts/run-lighthouse.js",
+    "build:images": "node scripts/process-images.js"
+  },
+  "keywords": [
+    "dental-clinic",
+    "hyderabad",
+    "painless-dentistry",
+    "vanilla-js"
+  ],
+  "author": "CHARANVARIGONDA",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "lighthouse": "^13.6.0",
+    "puppeteer": "^24.40.0",
+    "sharp": "^0.34.5"
+  }
+}

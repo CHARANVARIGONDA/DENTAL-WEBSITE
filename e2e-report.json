@@ -1,0 +1,215 @@
+{
+  "viewports": [
+    {
+      "viewport": "320x568-iphone5",
+      "width": 320,
+      "height": 568,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-320x568-iphone5.png",
+      "passed": true
+    },
+    {
+      "viewport": "360x800-android",
+      "width": 360,
+      "height": 800,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-360x800-android.png",
+      "passed": true
+    },
+    {
+      "viewport": "375x667-iphone-se",
+      "width": 375,
+      "height": 667,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-375x667-iphone-se.png",
+      "passed": true
+    },
+    {
+      "viewport": "390x844-iphone13",
+      "width": 390,
+      "height": 844,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-390x844-iphone13.png",
+      "passed": true
+    },
+    {
+      "viewport": "412x915-pixel7",
+      "width": 412,
+      "height": 915,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-412x915-pixel7.png",
+      "passed": true
+    },
+    {
+      "viewport": "430x932-iphone15promax",
+      "width": 430,
+      "height": 932,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-430x932-iphone15promax.png",
+      "passed": true
+    },
+    {
+      "viewport": "844x390-landscape-mobile",
+      "width": 844,
+      "height": 390,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-844x390-landscape-mobile.png",
+      "passed": true
+    },
+    {
+      "viewport": "768x1024-ipad-portrait",
+      "width": 768,
+      "height": 1024,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-768x1024-ipad-portrait.png",
+      "passed": true
+    },
+    {
+      "viewport": "1024x768-ipad-landscape",
+      "width": 1024,
+      "height": 768,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-1024x768-ipad-landscape.png",
+      "passed": true
+    },
+    {
+      "viewport": "1194x834-ipad-pro-landscape",
+      "width": 1194,
+      "height": 834,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-1194x834-ipad-pro-landscape.png",
+      "passed": true
+    },
+    {
+      "viewport": "1366x768-laptop",
+      "width": 1366,
+      "height": 768,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-1366x768-laptop.png",
+      "passed": true
+    },
+    {
+      "viewport": "1440x900-desktop",
+      "width": 1440,
+      "height": 900,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-1440x900-desktop.png",
+      "passed": true
+    },
+    {
+      "viewport": "1920x1080-fhd",
+      "width": 1920,
+      "height": 1080,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-1920x1080-fhd.png",
+      "passed": true
+    },
+    {
+      "viewport": "2560x1440-qhd",
+      "width": 2560,
+      "height": 1440,
+      "hasOverflow": false,
+      "brokenImages": 0,
+      "headerCollision": false,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "screenshot": "screenshots/page-2560x1440-qhd.png",
+      "passed": true
+    }
+  ],
+  "flows": [
+    {
+      "name": "Call & WhatsApp Link Audit",
+      "passed": true
+    },
+    {
+      "name": "5-Step Booking Submission",
+      "passed": true
+    },
+    {
+      "name": "Booking Edge Cases & Validations",
+      "passed": true
+    },
+    {
+      "name": "All 10 Treatment Modals & Preselect",
+      "passed": true
+    },
+    {
+      "name": "Gallery Lightbox",
+      "passed": true
+    },
+    {
+      "name": "FAQ Accordion All 8 Items",
+      "passed": true
+    },
+    {
+      "name": "Live Status Chip Timezone Logic",
+      "passed": true
+    },
+    {
+      "name": "No-JS Fallback Visibility",
+      "passed": true
+    },
+    {
+      "name": "Prefers-Reduced-Motion Instant Render",
+      "passed": true
+    }
+  ],
+  "performance": {
+    "throttledLoadMs": 3397,
+    "domContentLoadedMs": 3023,
+    "loadEventMs": 3389
+  }
+}

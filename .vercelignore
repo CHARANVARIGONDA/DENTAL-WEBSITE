@@ -1,0 +1,8 @@
+scripts/
+tools/
+screenshots/
+assets/raw/
+node_modules/
+.git/
+.gitignore
+*.log

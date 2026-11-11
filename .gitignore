@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Logs & temp artifacts
+*.log
+.tmp-chrome-*
+lighthouse-report.json
+round3-audit-report.json
+
+# Vercel CLI
+.vercel
+
+# Local review screenshots and raw source downloads
+screenshots/
+assets/raw/

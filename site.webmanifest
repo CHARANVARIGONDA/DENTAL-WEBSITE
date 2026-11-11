@@ -1,0 +1,22 @@
+{
+  "name": "Ivory Dental Studio",
+  "short_name": "Ivory Dental",
+  "description": "Painless, trusted dental care in Hyderabad. Advanced dental implants, single-visit RCT, clear aligners, and comprehensive family check-ups.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F6F2",
+  "theme_color": "#F7F6F2",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

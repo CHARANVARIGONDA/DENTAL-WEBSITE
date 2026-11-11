@@ -181,3 +181,4 @@ function updateSiteUrl(newBaseUrl) {
 
 const inputArg = process.argv[2];
 updateSiteUrl(inputArg);
+

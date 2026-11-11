@@ -75,3 +75,4 @@ try {
 } catch (e) {
   console.log('\nNo git history yet or error reading git log');
 }
+

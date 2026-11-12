@@ -66,36 +66,57 @@ class BookingController {
     this.config = window.CONFIG || {};
     this.selectedBranch = 'banjara';
     this.selectedTreatment = 'implants';
-    this.selectedTreatmentName = 'Dental Implants';
     this.selectedDate = null;
     this.selectedTime = null;
 
     this.branchLabels = {
-      banjara: 'Banjara Hills',
-      madhapur: 'Madhapur'
+      banjara: { en: 'Banjara Hills', te: 'బంజారా హిల్స్' },
+      madhapur: { en: 'Madhapur', te: 'మాదాపూర్' }
     };
 
     this.treatmentLabels = {
-      implants: 'Dental Implants',
-      rct: 'Root Canal Treatment',
-      braces: 'Braces & Clear Aligners',
-      crowns: 'Crowns & Bridges',
-      cleaning: 'Teeth Cleaning & Polishing',
-      whitening: 'Teeth Whitening',
-      kids: 'Pediatric Dentistry',
-      dentures: 'Dentures',
-      extraction: 'Tooth Extraction',
-      checkup: 'Dental Check-up & X-Rays',
-      consultation: 'General Consultation'
+      implants: { en: 'Dental Implants', te: 'డెంటల్ ఇంప్లాంట్స్' },
+      rct: { en: 'Root Canal (RCT)', te: 'రూట్ కెనాల్ (RCT)' },
+      braces: { en: 'Braces & Clear Aligners', te: 'బ్రేసెస్ & క్లియర్ అలైలర్లు' },
+      crowns: { en: 'Crowns & Bridges', te: 'క్రౌన్స్ & బ్రిడ్జెస్' },
+      cleaning: { en: 'Cleaning & Scaling', te: 'టీత్ క్లీనింగ్ & స్కేలింగ్' },
+      whitening: { en: 'Teeth Whitening', te: 'టీత్ వైట్నింగ్' },
+      kids: { en: 'Pediatric Dentistry', te: 'పిల్లల దంత చికిత్స' },
+      dentures: { en: 'Dentures', te: 'డెంచర్స్ (కృత్రిమ పళ్ళు)' },
+      extraction: { en: 'Tooth Extraction', te: 'పన్ను తొలగింపు' },
+      checkup: { en: 'Check-up & X-Rays', te: 'దంత పరీక్ష & ఎక్స్-రే' },
+      consultation: { en: 'General Consultation', te: 'సాధారణ సంప్రదింపులు' }
     };
 
     this.init();
+  }
+
+  getLang() {
+    return window.currentLang || (typeof localStorage !== 'undefined' && localStorage.getItem('ivory_lang')) || 'en';
+  }
+
+  getBranchName(id) {
+    const isTe = this.getLang() === 'te';
+    const b = this.branchLabels[id];
+    return b ? (b[isTe ? 'te' : 'en'] || b.en) : 'Banjara Hills';
+  }
+
+  getTreatmentName(id) {
+    const isTe = this.getLang() === 'te';
+    const t = this.treatmentLabels[id];
+    return t ? (t[isTe ? 'te' : 'en'] || t.en) : (isTe ? 'సాధారణ సంప్రదింపులు' : 'General Consultation');
   }
 
   init() {
     this.renderDates();
     this.renderSlots();
     this.bindEvents();
+    this.updateSummary();
+  }
+
+  setLanguage(lang) {
+    this.renderDates();
+    this.renderSlots();
     this.updateSummary();
   }
 
@@ -109,8 +130,15 @@ class BookingController {
     const daysAhead = this.config.BOOKING_DAYS_AHEAD || 14;
     const closedDates = this.config.CLOSED_DATES || [];
 
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const isTe = this.getLang() === 'te';
+    const weekdays = isTe 
+      ? ['ఆది', 'సోమ', 'మంగళ', 'బుధ', 'గురు', 'శుక్ర', 'శని']
+      : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = isTe
+      ? ['జన', 'ఫిబ్ర', 'మార్చి', 'ఏప్రి', 'మే', 'జూన్', 'జూలై', 'ఆగ', 'సెప్టెం', 'అక్టో', 'నవం', 'డిసెం']
+      : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const todayText = isTe ? 'ఈరోజు' : 'Today';
+    const closedText = isTe ? 'సెలవు' : 'Closed';
 
     let firstAvailableDate = null;
 
@@ -140,10 +168,10 @@ class BookingController {
       label.innerHTML = `
         <input type="radio" name="booking-date" value="${iso}" ${checkedAttr} ${isClosed ? 'disabled' : ''}>
         <span class="date-tile-content">
-          ${isToday ? '<span class="date-badge-today">Today</span>' : `<span class="date-weekday">${weekdayStr}</span>`}
+          ${isToday ? `<span class="date-badge-today">${todayText}</span>` : `<span class="date-weekday">${weekdayStr}</span>`}
           <span class="date-number">${dayNum}</span>
           <span class="date-month">${monthStr}</span>
-          ${isClosed ? '<span class="date-status-closed">Closed</span>' : ''}
+          ${isClosed ? `<span class="date-status-closed">${closedText}</span>` : ''}
         </span>
       `;
 
@@ -238,10 +266,12 @@ class BookingController {
       }
     }
 
+    const isTe = this.getLang() === 'te';
+
     if (availableCount === 0 && isToday) {
       slotsContainer.innerHTML = `
         <div class="slots-empty-notice">
-          <p>No more slots available today. Please pick another day above.</p>
+          <p>${isTe ? 'ఈరోజుకు స్లాట్‌లు ముగిశాయి. దయచేసి పైనుండి మరొక తేదీని ఎంచుకోండి.' : 'No more slots available today. Please pick another day above.'}</p>
         </div>
       `;
       // Automatically advance to the next open day if today has no slots
@@ -252,7 +282,7 @@ class BookingController {
     const renderGroup = (title, slots) => {
       if (!slots || slots.length === 0) return '';
       const chips = slots.map(s => {
-        const titleAttr = s.isBlocked ? 'title="Unavailable"' : (s.isPast ? 'title="Time passed"' : '');
+        const titleAttr = s.isBlocked ? (isTe ? 'title="అందుబాటులో లేదు"' : 'title="Unavailable"') : (s.isPast ? (isTe ? 'title="సమయం ముగిసింది"' : 'title="Time passed"') : '');
         return `
           <label class="slot-chip ${s.disabled ? 'is-disabled' : ''} ${s.isBlocked ? 'is-blocked' : ''}" ${titleAttr}>
             <input type="radio" name="booking-time" value="${s.time}" ${s.selected ? 'checked' : ''} ${s.disabled ? 'disabled' : ''}>
@@ -270,9 +300,9 @@ class BookingController {
     };
 
     slotsContainer.innerHTML = `
-      ${renderGroup('Morning', morningSlots)}
-      ${renderGroup('Afternoon', afternoonSlots)}
-      ${renderGroup('Evening', eveningSlots)}
+      ${renderGroup(isTe ? 'ఉదయం' : 'Morning', morningSlots)}
+      ${renderGroup(isTe ? 'మధ్యాహ్నం' : 'Afternoon', afternoonSlots)}
+      ${renderGroup(isTe ? 'సాయంత్రం' : 'Evening', eveningSlots)}
     `;
   }
 
@@ -299,7 +329,6 @@ class BookingController {
         this.updateSummary();
       } else if (e.target.name === 'booking-treatment') {
         this.selectedTreatment = e.target.value;
-        this.selectedTreatmentName = this.treatmentLabels[this.selectedTreatment] || 'General Consultation';
         this.updateSummary();
       } else if (e.target.name === 'booking-date') {
         this.selectedDate = e.target.value;
@@ -337,19 +366,26 @@ class BookingController {
     const summaryElem = document.getElementById('booking-live-summary');
     if (!summaryElem) return;
 
-    const branchName = this.branchLabels[this.selectedBranch] || 'Banjara Hills';
-    const treatmentName = this.selectedTreatmentName || 'General Consultation';
+    const isTe = this.getLang() === 'te';
+    const branchName = this.getBranchName(this.selectedBranch);
+    const treatmentName = this.getTreatmentName(this.selectedTreatment);
 
-    let dateFormatted = 'Pick a date';
+    let dateFormatted = isTe ? 'తేదీని ఎంచుకోండి' : 'Pick a date';
     if (this.selectedDate) {
       const parts = this.selectedDate.split('-');
       const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-      const weekdays = ['Sun', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      dateFormatted = `${weekdays[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+      const weekdays = isTe 
+        ? ['ఆది', 'సోమ', 'మంగళ', 'బుధ', 'గురు', 'శుక్ర', 'శని']
+        : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = isTe
+        ? ['జన', 'ఫిబ్ర', 'మార్చి', 'ఏప్రి', 'మే', 'జూన్', 'జూలై', 'ఆగ', 'సెప్టెం', 'అక్టో', 'నవం', 'డిసెం']
+        : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      dateFormatted = isTe 
+        ? `${d.getDate()} ${months[d.getMonth()]}, ${weekdays[d.getDay()]}`
+        : `${weekdays[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
     }
 
-    let timeFormatted = 'Pick a time';
+    let timeFormatted = isTe ? 'సమయాన్ని ఎంచుకోండి' : 'Pick a time';
     if (this.selectedTime) {
       timeFormatted = formatTime12h(this.selectedTime);
     }
@@ -362,7 +398,6 @@ class BookingController {
     if (radio) {
       radio.checked = true;
       this.selectedTreatment = treatmentId;
-      this.selectedTreatmentName = this.treatmentLabels[treatmentId] || 'General Consultation';
       this.updateSummary();
     }
   }
@@ -373,32 +408,33 @@ class BookingController {
     const noteInput = document.getElementById('booking-note');
     const errContainer = document.getElementById('booking-error-msg');
     const successContainer = document.getElementById('booking-success-msg');
+    const isTe = this.getLang() === 'te';
 
     if (errContainer) errContainer.hidden = true;
     if (successContainer) successContainer.hidden = true;
 
     // Validate Branch
     if (!this.selectedBranch) {
-      this.showError('Please select a clinic branch.', 'booking-step-branch');
+      this.showError(isTe ? 'దయచేసి ఒక క్లినిక్ బ్రాంచ్‌ను ఎంచుకోండి.' : 'Please select a clinic branch.', 'booking-step-branch');
       return;
     }
 
     // Validate Treatment
     if (!this.selectedTreatment) {
-      this.showError('Please select a dental treatment.', 'booking-step-treatment');
+      this.showError(isTe ? 'దయచేసి ఒక దంత చికిత్సను ఎంచుకోండి.' : 'Please select a dental treatment.', 'booking-step-treatment');
       return;
     }
 
     // Validate Date
     if (!this.selectedDate) {
-      this.showError('Please select a preferred appointment date.', 'booking-step-date');
+      this.showError(isTe ? 'దయచేసి అనుకూలమైన తేదీని ఎంచుకోండి.' : 'Please select a preferred appointment date.', 'booking-step-date');
       return;
     }
 
     // Validate Time
     const timeRadio = document.querySelector('input[name="booking-time"]:checked');
     if (!timeRadio || !timeRadio.value) {
-      this.showError('Please select an available appointment time slot.', 'booking-step-time');
+      this.showError(isTe ? 'దయచేసి అందుబాటులో ఉన్న సమయాన్ని (స్లాట్) ఎంచుకోండి.' : 'Please select an available appointment time slot.', 'booking-step-time');
       return;
     }
     this.selectedTime = timeRadio.value;
@@ -406,7 +442,7 @@ class BookingController {
     // Validate Name (min 2 chars)
     const nameVal = nameInput ? nameInput.value.trim() : '';
     if (!nameVal || nameVal.length < 2) {
-      this.showError('Please enter your full name (minimum 2 characters).', 'booking-name');
+      this.showError(isTe ? 'దయచేసి మీ పూర్తి పేరు నమోదు చేయండి (కనీసం 2 అక్షరాలు).' : 'Please enter your full name (minimum 2 characters).', 'booking-name');
       return;
     }
 
@@ -415,7 +451,7 @@ class BookingController {
     const phoneClean = phoneVal.replace(/^\+91/, '');
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(phoneClean)) {
-      this.showError('Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).', 'booking-phone');
+      this.showError(isTe ? 'దయచేసి సరైన 10-అంకెల భారతీయ మొబైల్ నంబర్ నమోదు చేయండి.' : 'Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).', 'booking-phone');
       return;
     }
 
@@ -431,8 +467,8 @@ class BookingController {
     const data = {
       name: nameVal,
       phone: `+91 ${phoneClean}`,
-      branchName: this.branchLabels[this.selectedBranch],
-      treatmentName: this.selectedTreatmentName,
+      branchName: this.getBranchName(this.selectedBranch),
+      treatmentName: this.getTreatmentName(this.selectedTreatment),
       dateFormatted: humanDate,
       timeFormatted: formatTime12h(this.selectedTime),
       note: noteVal
@@ -445,7 +481,9 @@ class BookingController {
 
     // Show honest confirmation message
     if (successContainer) {
-      successContainer.textContent = 'Your request is ready. Send it on WhatsApp and the clinic will confirm your slot.';
+      successContainer.textContent = isTe 
+        ? 'మీ అభ్యర్థన సిద్ధంగా ఉంది. వాట్సాప్‌లో పంపండి, క్లినిక్ నిర్ధారిస్తుంది.'
+        : 'Your request is ready. Send it on WhatsApp and the clinic will confirm your slot.';
       successContainer.hidden = false;
       successContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }

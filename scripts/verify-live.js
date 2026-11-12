@@ -75,3 +75,4 @@ verifyLive().catch(err => {
   console.error('Live check error:', err);
   process.exit(1);
 });
+

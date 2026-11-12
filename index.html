@@ -7,10 +7,10 @@
   <meta name="description" content="Ivory Dental Studio is a modern, trusted dental clinic in Hyderabad offering painless dental implants, root canal treatments (RCT), braces, clear aligners, and family dental care.">
   <meta name="keywords" content="dental clinic Hyderabad, dental implants Hyderabad, RCT cost Hyderabad, braces Hyderabad, teeth cleaning Hyderabad, pediatric dentist Hyderabad">
   <link rel="canonical" href="https://dental-website-two-xi.vercel.app/">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="alternate icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#F7F6F2">
 
   <!-- Replace no-js class immediately -->
@@ -32,7 +32,7 @@
   <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -111,19 +111,27 @@
 
       <!-- Centered Navigation Links (Desktop: Treatments, Doctors, Gallery, Reviews, Contact, Emergency) -->
       <nav class="desktop-nav" aria-label="Main Navigation">
-        <a href="#treatments">Treatments</a>
-        <a href="#doctors">Doctors</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-        <a href="#emergency" class="nav-emergency-link">
+        <a href="#treatments" data-i18n="nav.treatments">Treatments</a>
+        <a href="#doctors" data-i18n="nav.doctors">Doctors</a>
+        <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+        <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+        <a href="javascript:void(0)" onclick="if(window.openTreatmentTracker) window.openTreatmentTracker();" class="nav-track-link" data-i18n="nav.track">Track Plan</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a href="#emergency" class="nav-emergency-link" data-i18n="nav.emergency">
           <span class="nav-emergency-dot" aria-hidden="true"></span>
           Emergency
         </a>
       </nav>
 
-      <!-- Right Actions: Live Status Chip (>=1536px), Call, WhatsApp, Hamburger -->
+      <!-- Right Actions: Language Toggle, Live Status Chip, Call, WhatsApp, Hamburger -->
       <div class="header-actions">
+        <!-- Language Switcher (FR-12: EN / తెలుగు) -->
+        <div class="lang-switcher" role="group" aria-label="Language selector">
+          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true" aria-label="Switch to English">EN</button>
+          <span class="lang-divider" aria-hidden="true">|</span>
+          <button type="button" class="lang-btn" data-lang="te" aria-pressed="false" aria-label="తెలుగు భాషకు మార్చండి">తెలుగు</button>
+        </div>
+
         <!-- Live Status Chip (visible only >= 1536px) -->
         <div class="nav-status-chip" id="nav-live-chip" aria-live="polite">
           <span class="status-indicator-dot" id="nav-status-dot" aria-hidden="true"></span>
@@ -157,27 +165,37 @@
         <span class="brand-dot" aria-hidden="true"></span>
         Ivory Dental Studio
       </span>
-      <button type="button" class="modal-close-btn" id="mobile-drawer-close" aria-label="Close navigation menu">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="lang-switcher" role="group" aria-label="Mobile language selector">
+          <button type="button" class="lang-btn active" data-lang="en">EN</button>
+          <span class="lang-divider" aria-hidden="true">|</span>
+          <button type="button" class="lang-btn" data-lang="te">తెలుగు</button>
+        </div>
+        <button type="button" class="modal-close-btn" id="mobile-drawer-close" aria-label="Close navigation menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Drawer Links: Emergency FIRST, then sections, offers, and FAQ -->
+    <!-- Drawer Links: Emergency FIRST, then sections, offers, tracking, and FAQ -->
     <nav class="mobile-nav-links">
-      <a href="#emergency" class="mobile-nav-emergency">
+      <a href="#emergency" class="mobile-nav-emergency" data-i18n="nav.emergency">
         <span class="nav-emergency-dot" aria-hidden="true"></span>
         Emergency Guidance
       </a>
-      <a href="#treatments">Treatments</a>
-      <a href="#doctors">Doctors</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#offers">Special Offers</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact &amp; Branches</a>
+      <a href="#treatments" data-i18n="nav.treatments">Treatments</a>
+      <a href="#doctors" data-i18n="nav.doctors">Doctors</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="#offers" data-i18n="nav.offers">Special Offers</a>
+      <a href="javascript:void(0)" onclick="if(window.openTreatmentTracker){window.openTreatmentTracker();document.getElementById('mobile-drawer-close').click();}" data-i18n="nav.track">Track Plan &amp; Records</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#contact" data-i18n="nav.contact">Contact &amp; Branches</a>
+      <a href="javascript:void(0)" onclick="if(window.openCareReminder){window.openCareReminder();document.getElementById('mobile-drawer-close').click();}" data-i18n="nav.recall">Care Recall Reminders</a>
+      <a href="javascript:void(0)" onclick="if(window.openIvoryChat){window.openIvoryChat();document.getElementById('mobile-drawer-close').click();}">24/7 AI Assistant</a>
     </nav>
 
     <div class="mobile-drawer-actions">
@@ -199,20 +217,19 @@
         <div class="hero-grid">
           <!-- Text Content -->
           <div class="hero-content fade-up-element">
-            <span class="hero-eyebrow">
+            <span class="hero-eyebrow" data-i18n="hero.tag">
               <span class="section-label-line" aria-hidden="true"></span>
               Modern Private Dental Studio · Hyderabad
             </span>
-            <h1>Painless, trusted dental care in Hyderabad</h1>
-            <p class="hero-p">
+            <h1 data-i18n="hero.title">Painless, trusted dental care in Hyderabad</h1>
+            <p class="hero-p" data-i18n="hero.desc">
               Experienced prosthodontists, endodontists, and pediatric specialists delivering calm, hospital-grade dental treatments with transparent, honest pricing.
             </p>
             <div class="hero-buttons">
-              <a href="#booking-card" class="btn btn-primary" data-action="book-scroll">
-                Request Appointment
-                <span class="btn-arrow-icon" aria-hidden="true">&rarr;</span>
+              <a href="#booking-card" class="btn btn-primary" data-action="book-scroll" data-i18n="hero.bookBtn">
+                Request Appointment &rarr;
               </a>
-              <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-action="whatsapp">
+              <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-action="whatsapp" data-i18n="hero.waBtn">
                 WhatsApp Inquiry
               </a>
             </div>
@@ -288,10 +305,10 @@
                 <span class="section-label-line" aria-hidden="true"></span>
                 01 — Treatments
               </span>
-              <h2>Comprehensive Dental Care</h2>
+              <h2 data-i18n="sections.treatmentsTitle">Comprehensive Dental Care</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.treatmentsSubtitle">
                 From preventive cleanings to precision implantology, every procedure is carried out with painless computerized numbing and upfront indicative costs.
               </p>
             </div>
@@ -498,7 +515,7 @@
     <section class="section-padding bg-sage-tint" id="about">
       <div class="container">
         <div class="section-header fade-up-element">
-          <span class="section-label">
+          <span class="section-label" data-i18n="about.label">
             <span class="section-label-line" aria-hidden="true"></span>
             02 — Clinical Standard
           </span>
@@ -507,10 +524,10 @@
         <div class="about-grid">
           <!-- Left: Large Statement Paragraph -->
           <div class="fade-up-element">
-            <p class="about-statement">
+            <p class="about-statement" data-i18n="about.statement">
               We founded Ivory Dental Studio on a single conviction: visiting the dentist should be calm, reassuring, and completely free of dread.
             </p>
-            <p style="margin-top: 24px; font-size: 1.05rem; color: rgba(38, 39, 35, 0.75); line-height: 1.65;">
+            <p style="margin-top: 24px; font-size: 1.05rem; color: rgba(38, 39, 35, 0.75); line-height: 1.65;" data-i18n="about.substatement">
               Every operatory is built to hospital-grade standards. We never rush diagnostic consultations, we explain every clinical option with digital imaging, and we guarantee zero hidden charges before treatment begins.
             </p>
           </div>
@@ -520,22 +537,22 @@
             <div class="about-trust-row">
               <span class="about-row-num">01</span>
               <div>
-                <h3 class="about-row-title">Hospital-Grade Autoclave Sterilisation</h3>
-                <p class="about-row-desc">Multi-stage Class-B vacuum autoclave cycles and vacuum-sealed single-use kits guarantee zero cross-contamination.</p>
+                <h3 class="about-row-title" data-i18n="about.point1Title">Hospital-Grade Autoclave Sterilisation</h3>
+                <p class="about-row-desc" data-i18n="about.point1Desc">Multi-stage Class-B vacuum autoclave cycles and vacuum-sealed single-use kits guarantee zero cross-contamination.</p>
               </div>
             </div>
             <div class="about-trust-row">
               <span class="about-row-num">02</span>
               <div>
-                <h3 class="about-row-title">Low-Radiation Digital Diagnostic Imaging</h3>
-                <p class="about-row-desc">High-precision digital sensors emit 80% less radiation than conventional dental film while revealing instant detail.</p>
+                <h3 class="about-row-title" data-i18n="about.point2Title">Low-Radiation Digital Diagnostic Imaging</h3>
+                <p class="about-row-desc" data-i18n="about.point2Desc">High-precision digital sensors emit 80% less radiation than conventional dental film while revealing instant detail.</p>
               </div>
             </div>
             <div class="about-trust-row">
               <span class="about-row-num">03</span>
               <div>
-                <h3 class="about-row-title">Computerized Painless Anesthesia</h3>
-                <p class="about-row-desc">Topical pre-numbing gels and micro-metered delivery systems ensure comfortable, stress-free procedures.</p>
+                <h3 class="about-row-title" data-i18n="about.point3Title">Computerized Painless Anesthesia</h3>
+                <p class="about-row-desc" data-i18n="about.point3Desc">Topical pre-numbing gels and micro-metered delivery systems ensure comfortable, stress-free procedures.</p>
               </div>
             </div>
           </div>
@@ -555,10 +572,10 @@
                 <span class="section-label-line" aria-hidden="true"></span>
                 03 — Specialists
               </span>
-              <h2>Experienced Post-Graduate Clinicians</h2>
+              <h2 data-i18n="sections.doctorsTitle">Experienced Post-Graduate Clinicians</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.doctorsSubtitle">
                 Each treatment plan is designed and supervised by full-time MDS specialists dedicated to gentle, ethical patient outcomes.
               </p>
             </div>
@@ -579,14 +596,14 @@
         <div class="section-header fade-up-element">
           <div class="section-header-row">
             <div class="section-header-title-col">
-              <span class="section-label">
+              <span class="section-label" data-i18n="sections.galleryLabel">
                 <span class="section-label-line" aria-hidden="true"></span>
                 04 — Visual Proof
               </span>
-              <h2>Clinical Environment &amp; Results</h2>
+              <h2 data-i18n="sections.galleryTitle">Clinical Environment &amp; Results</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.gallerySubtitle">
                 Take a closer look at our sterilized operatory suites, diagnostic setups, and genuine patient smile outcomes.
               </p>
             </div>
@@ -597,7 +614,7 @@
           <!-- Populated from content.js with real photos across all 6 slots -->
         </div>
 
-        <p class="gallery-consent-note">Shared with patient consent.</p>
+        <p class="gallery-consent-note" data-i18n="sections.galleryConsent">Shared with patient consent.</p>
       </div>
     </section>
 
@@ -609,14 +626,14 @@
         <div class="section-header fade-up-element">
           <div class="section-header-row">
             <div class="section-header-title-col">
-              <span class="section-label">
+              <span class="section-label" data-i18n="sections.reviewsLabel">
                 <span class="section-label-line" aria-hidden="true"></span>
                 05 — Patient Stories
               </span>
-              <h2>Verified Patient Experiences</h2>
+              <h2 data-i18n="sections.reviewsTitle">Verified Patient Experiences</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.reviewsSubtitle">
                 Read how our gentle approach and transparent communications have helped patients overcome dental anxiety across Hyderabad.
               </p>
             </div>
@@ -637,14 +654,14 @@
         <div class="section-header fade-up-element">
           <div class="section-header-row">
             <div class="section-header-title-col">
-              <span class="section-label">
+              <span class="section-label" data-i18n="sections.offersLabel">
                 <span class="section-label-line" aria-hidden="true"></span>
                 06 — Packages
               </span>
-              <h2>Transparent Clinic Offers</h2>
+              <h2 data-i18n="sections.offersTitle">Transparent Clinic Offers</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.offersSubtitle">
                 Value-driven preventive packages with no hidden consultation add-ons. Available at both Banjara Hills and Madhapur branches.
               </p>
             </div>
@@ -653,6 +670,26 @@
 
         <div class="offers-panel fade-up-element" id="offers-container">
           <!-- Populated from content.js: 3 columns with thin vertical dividers -->
+        </div>
+
+        <!-- Care Recall Banner (Phase 2 - FR-11) -->
+        <div class="care-recall-banner fade-up-element" style="margin-top: 32px;">
+          <div class="care-recall-inner">
+            <div class="care-recall-content">
+              <span class="care-recall-badge">Patient Recall System · FR-11</span>
+              <h3 class="care-recall-title">Schedule Routine 6-Month Care Recall</h3>
+              <p class="care-recall-desc">
+                Preventive dental care protects your smile and helps avoid emergency procedures. Register for automated WhatsApp recall notifications and download instant calendar invites (.ics) for routine cleanings, RCT crown checks, or braces adjustments.
+              </p>
+            </div>
+            <button type="button" class="btn btn-primary care-recall-btn" onclick="if(window.openCareReminder) window.openCareReminder();">
+              <span>Schedule Recall Reminder</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -663,7 +700,7 @@
     <section class="section-padding bg-bg" id="faq">
       <div class="container">
         <div class="section-header fade-up-element">
-          <span class="section-label">
+          <span class="section-label" data-i18n="sections.faqLabel">
             <span class="section-label-line" aria-hidden="true"></span>
             07 — Frequently Asked Questions
           </span>
@@ -672,14 +709,13 @@
         <div class="faq-two-col">
           <!-- Left Column (Sticky heading + direct WhatsApp prompt) -->
           <div class="faq-left-col fade-up-element">
-            <h2>Common Questions About Dental Visits</h2>
-            <p style="margin-top: 16px; font-size: 1.05rem; color: rgba(38, 39, 35, 0.75); line-height: 1.6;">
+            <h2 data-i18n="sections.faqTitle">Common Questions About Dental Visits</h2>
+            <p style="margin-top: 16px; font-size: 1.05rem; color: rgba(38, 39, 35, 0.75); line-height: 1.6;" data-i18n="sections.faqSubtitle">
               Everything you need to know about pricing, pain management, and appointment scheduling.
             </p>
             <div style="margin-top: 24px;">
               <a href="https://wa.me/910000000000?text=Hi%20Ivory%20Dental%20Studio%2C%20I%20have%20a%20question%20regarding%20treatments." target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-action="whatsapp">
-                Still have questions? WhatsApp us
-                <span class="btn-arrow-icon" aria-hidden="true">&rarr;</span>
+                <span data-i18n="sections.faqWhatsappBtn">Still have questions? WhatsApp us →</span>
               </a>
             </div>
           </div>
@@ -818,14 +854,14 @@
         <div class="section-header fade-up-element">
           <div class="section-header-row">
             <div class="section-header-title-col">
-              <span class="section-label">
+              <span class="section-label" data-i18n="sections.contactLabel">
                 <span class="section-label-line" aria-hidden="true"></span>
                 08 — Visit &amp; Schedule
               </span>
-              <h2>Two Convenient Hyderabad Branches</h2>
+              <h2 data-i18n="sections.contactTitle">Two Convenient Hyderabad Branches</h2>
             </div>
             <div class="section-header-desc-col">
-              <p class="section-subtitle">
+              <p class="section-subtitle" data-i18n="sections.contactSubtitle">
                 Select your preferred branch, pick an available slot, and submit your request directly to our clinical front-desk via WhatsApp.
               </p>
             </div>
@@ -841,8 +877,8 @@
           <!-- Right Column: Interactive 5-Step Booking Card -->
           <div class="booking-card fade-up-element" id="booking-card">
             <div class="booking-card-header">
-              <h3 class="booking-card-title">Request an Appointment</h3>
-              <p class="booking-card-subtitle">
+              <h3 class="booking-card-title" data-i18n="booking.title">Request an Appointment</h3>
+              <p class="booking-card-subtitle" data-i18n="booking.subtitle">
                 Pick your preferred slot. Our team verifies real-time chair availability on WhatsApp and confirms your appointment.
               </p>
             </div>
@@ -854,66 +890,66 @@
 
               <!-- Step 1: Branch Selection -->
               <div class="booking-step" id="booking-step-branch">
-                <span class="booking-step-label">1. Choose Branch</span>
+                <span class="booking-step-label" data-i18n="booking.step1">1. Choose Branch</span>
                 <div class="chips-group" role="radiogroup" aria-label="Clinic Branch">
                   <label class="chip-label">
                     <input type="radio" name="booking-branch" value="banjara" checked>
-                    <span>Banjara Hills</span>
+                    <span data-i18n="booking.branches.banjara">Banjara Hills</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-branch" value="madhapur">
-                    <span>Madhapur</span>
+                    <span data-i18n="booking.branches.madhapur">Madhapur</span>
                   </label>
                 </div>
               </div>
 
               <!-- Step 2: Treatment Selection -->
               <div class="booking-step" id="booking-step-treatment">
-                <span class="booking-step-label">2. Treatment or Service</span>
+                <span class="booking-step-label" data-i18n="booking.step2">2. Treatment or Service</span>
                 <div class="chips-group" role="radiogroup" aria-label="Dental Treatment">
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="implants" checked>
-                    <span>Dental Implants</span>
+                    <span data-i18n="booking.treatments.implants">Dental Implants</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="rct">
-                    <span>Root Canal (RCT)</span>
+                    <span data-i18n="booking.treatments.rct">Root Canal (RCT)</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="braces">
-                    <span>Braces &amp; Aligners</span>
+                    <span data-i18n="booking.treatments.braces">Braces &amp; Aligners</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="crowns">
-                    <span>Crowns &amp; Bridges</span>
+                    <span data-i18n="booking.treatments.crowns">Crowns &amp; Bridges</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="cleaning">
-                    <span>Cleaning &amp; Scaling</span>
+                    <span data-i18n="booking.treatments.cleaning">Cleaning &amp; Scaling</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="whitening">
-                    <span>Teeth Whitening</span>
+                    <span data-i18n="booking.treatments.whitening">Teeth Whitening</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="kids">
-                    <span>Pediatric Dentistry</span>
+                    <span data-i18n="booking.treatments.kids">Pediatric Dentistry</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="dentures">
-                    <span>Dentures</span>
+                    <span data-i18n="booking.treatments.dentures">Dentures</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="extraction">
-                    <span>Tooth Extraction</span>
+                    <span data-i18n="booking.treatments.extraction">Tooth Extraction</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="checkup">
-                    <span>Check-up &amp; X-Rays</span>
+                    <span data-i18n="booking.treatments.checkup">Check-up &amp; X-Rays</span>
                   </label>
                   <label class="chip-label">
                     <input type="radio" name="booking-treatment" value="consultation">
-                    <span>General Consultation</span>
+                    <span data-i18n="booking.treatments.consultation">General Consultation</span>
                   </label>
                 </div>
               </div>
@@ -921,7 +957,7 @@
               <!-- Step 3: Date Horizontal Snap Strip (14 Days) -->
               <div class="booking-step" id="booking-step-date">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                  <span class="booking-step-label" style="margin-bottom: 0;">3. Preferred Date</span>
+                  <span class="booking-step-label" data-i18n="booking.step3" style="margin-bottom: 0;">3. Preferred Date</span>
                   <div style="display: flex; gap: 6px;">
                     <button type="button" class="date-nav-btn" id="date-strip-prev" aria-label="Previous dates">&larr;</button>
                     <button type="button" class="date-nav-btn" id="date-strip-next" aria-label="Next dates">&rarr;</button>
@@ -936,7 +972,7 @@
 
               <!-- Step 4: Time Slot Chips (Morning / Afternoon / Evening) -->
               <div class="booking-step" id="booking-step-time">
-                <span class="booking-step-label">4. Preferred Time Slot</span>
+                <span class="booking-step-label" data-i18n="booking.step4">4. Preferred Time Slot</span>
                 <div id="booking-time-groups" role="radiogroup" aria-label="Appointment Time Slot">
                   <!-- Populated dynamically based on branch and selected date -->
                 </div>
@@ -944,19 +980,19 @@
 
               <!-- Step 5: Patient Details -->
               <div class="booking-step" id="booking-step-details">
-                <span class="booking-step-label">5. Your Contact Information</span>
+                <span class="booking-step-label" data-i18n="booking.step5">5. Your Contact Information</span>
                 <div class="form-field-group">
                   <div class="form-input-wrap">
-                    <label for="booking-name" class="form-label">Full Name *</label>
-                    <input type="text" id="booking-name" class="form-input" placeholder="e.g. Ramesh Kumar" required autocomplete="name">
+                    <label for="booking-name" class="form-label" data-i18n="booking.nameLabel">Full Name *</label>
+                    <input type="text" id="booking-name" class="form-input" placeholder="e.g. Ramesh Kumar" data-i18n-ph="booking.namePlaceholder" required autocomplete="name">
                   </div>
                   <div class="form-input-wrap">
-                    <label for="booking-phone" class="form-label">Mobile Number * (10-digit Indian mobile)</label>
+                    <label for="booking-phone" class="form-label" data-i18n="booking.phoneLabel">Mobile Number * (10-digit Indian mobile)</label>
                     <input type="tel" id="booking-phone" class="form-input" placeholder="9876543210" pattern="[6-9][0-9]{9}" required autocomplete="tel">
                   </div>
                   <div class="form-input-wrap">
-                    <label for="booking-note" class="form-label">Special Notes / Medical Concerns (Optional)</label>
-                    <textarea id="booking-note" class="form-textarea" placeholder="Describe any dental pain, dental phobia, or past treatments..."></textarea>
+                    <label for="booking-note" class="form-label" data-i18n="booking.noteLabel">Special Notes / Medical Concerns (Optional)</label>
+                    <textarea id="booking-note" class="form-textarea" placeholder="Describe any dental pain, dental phobia, or past treatments..." data-i18n-ph="booking.notePlaceholder"></textarea>
                   </div>
                 </div>
               </div>
@@ -967,8 +1003,8 @@
               </div>
 
               <!-- Submit Button -->
-              <button type="submit" class="btn btn-primary" style="width: 100%; height: 52px; font-size: 16px;">
-                Request on WhatsApp
+              <button type="submit" class="btn btn-primary" id="booking-submit-btn" style="width: 100%; height: 52px; font-size: 16px;">
+                <span data-i18n="booking.submitBtn">Request on WhatsApp</span>
                 <span class="btn-arrow-icon" aria-hidden="true">&rarr;</span>
               </button>
             </form>
@@ -989,11 +1025,11 @@
 
         <!-- Full-Width Emergency Guidance Box (4px bronze left border) -->
         <div class="emergency-box-full fade-up-element" id="emergency">
-          <div class="emergency-badge">
+          <div class="emergency-badge" data-i18n="sections.emergencyBadge">
             <span class="emergency-dot" aria-hidden="true"></span>
             Dental Emergency Guidance
           </div>
-          <p class="emergency-text">
+          <p class="emergency-text" data-i18n="sections.emergencyText">
             WhatsApp messages are answered promptly during clinic operating hours (Mon–Sat 9:30 AM – 8:00 PM). For severe dental trauma, uncontrolled bleeding, or acute facial swelling occurring outside operating hours, please visit your nearest hospital emergency department immediately.
           </p>
         </div>
@@ -1028,6 +1064,8 @@
             <li><a href="#reviews">Patient Reviews</a></li>
             <li><a href="#offers">Special Offers</a></li>
             <li><a href="#faq">Frequently Asked Questions</a></li>
+            <li><a href="javascript:void(0)" onclick="if(window.openCareReminder) window.openCareReminder();">Care Recall Reminders</a></li>
+            <li><a href="javascript:void(0)" onclick="if(window.openIvoryChat) window.openIvoryChat();">24/7 AI Assistant</a></li>
           </ul>
         </div>
 
@@ -1125,5 +1163,7 @@
   <script src="js/content.js"></script>
   <script src="js/booking.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/phase3.js"></script>
 </body>
 </html>

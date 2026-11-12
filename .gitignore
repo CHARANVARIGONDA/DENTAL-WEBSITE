@@ -19,4 +19,5 @@ round3-audit-report.json
 
 # Local review screenshots and raw source downloads
 screenshots/
+test-artifacts/
 assets/raw/

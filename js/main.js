@@ -79,6 +79,9 @@ function getClinicStatus(customDate = null) {
   }
 }
 
+// Expose getClinicStatus globally for chatbot and recall systems
+window.getClinicStatus = getClinicStatus;
+
 function updateStatusDisplay() {
   const status = getClinicStatus();
   const navText = document.getElementById('nav-status-text');
@@ -218,8 +221,17 @@ function initStickyMobileBar() {
   });
 }
 
+// Translation helper for bilingual support (FR-12)
+function t(obj) {
+  if (!obj) return '';
+  if (typeof obj === 'string') return obj;
+  const lang = window.currentLang || (typeof localStorage !== 'undefined' && localStorage.getItem('ivory_lang')) || 'en';
+  return obj[lang] || obj.en || '';
+}
+window.t = t;
+
 /* --------------------------------------------------------------------------
-   5. Dynamic Section Rendering from content.js (Doctors, Gallery, Reviews, Offers, Branches)
+   5. Dynamic Section Rendering from content.js (Doctors, Gallery, Reviews, Offers, Branches, FAQs)
    -------------------------------------------------------------------------- */
 function initDynamicSections() {
   const content = window.CONTENT || {};
@@ -228,7 +240,7 @@ function initDynamicSections() {
   const docsContainer = document.getElementById('doctors-container');
   if (docsContainer && content.doctors) {
     docsContainer.innerHTML = content.doctors.map(doc => `
-      <article class="doctor-item fade-up-element">
+      <article class="doctor-item in-view">
         <div class="doctor-arch-frame">
           <picture>
             <source type="image/webp" srcset="${doc.img640} 480w, ${doc.img1200} 800w" sizes="(max-width: 768px) 100vw, 360px">
@@ -236,8 +248,8 @@ function initDynamicSections() {
           </picture>
         </div>
         <div class="doctor-text-lines">
-          <h3 class="doctor-name">${doc.name.en}</h3>
-          <div class="doctor-role">${doc.role.en}</div>
+          <h3 class="doctor-name">${t(doc.name)}</h3>
+          <div class="doctor-role">${t(doc.role)}</div>
           <div class="doctor-qual">${doc.qualifications}</div>
           <div class="doctor-exp">${doc.experience}</div>
         </div>
@@ -249,7 +261,7 @@ function initDynamicSections() {
   const galleryContainer = document.getElementById('gallery-container');
   if (galleryContainer && content.gallery) {
     galleryContainer.innerHTML = content.gallery.map((item, idx) => `
-      <div class="gallery-item fade-up-element" tabindex="0" role="button" aria-label="View ${item.caption.en} in lightbox" data-gallery-index="${idx}">
+      <div class="gallery-item in-view" tabindex="0" role="button" aria-label="View ${t(item.caption)} in lightbox" data-gallery-index="${idx}">
         <div class="gallery-photo-wrap">
           <picture>
             <source type="image/webp" srcset="${item.img640} 640w, ${item.img1200} 1200w" sizes="(max-width: 768px) 100vw, 420px">
@@ -257,7 +269,7 @@ function initDynamicSections() {
           </picture>
         </div>
         <div class="gallery-caption">
-          <span>${item.caption.en}</span>
+          <span>${t(item.caption)}</span>
         </div>
       </div>
     `).join('');
@@ -271,9 +283,9 @@ function initDynamicSections() {
 
     reviewsContainer.innerHTML = `
       <!-- Featured Review Left -->
-      <div class="featured-review fade-up-element">
+      <div class="featured-review in-view">
         <span class="featured-quote-icon" aria-hidden="true">&ldquo;</span>
-        <p class="featured-review-text">&ldquo;${featured.text.en}&rdquo;</p>
+        <p class="featured-review-text">&ldquo;${t(featured.text)}&rdquo;</p>
         <div class="featured-author-box">
           <div class="avatar-circle" aria-hidden="true">${featured.author.charAt(0)}</div>
           <div>
@@ -284,7 +296,7 @@ function initDynamicSections() {
       </div>
 
       <!-- 5 Reviews Subgrid Right -->
-      <div class="reviews-subgrid fade-up-element">
+      <div class="reviews-subgrid in-view">
         ${rest.map(rev => `
           <div class="review-subitem">
             <div class="stars-cluster" role="img" aria-label="${rev.rating} out of 5 stars">
@@ -294,7 +306,7 @@ function initDynamicSections() {
                 </svg>
               `).join('')}
             </div>
-            <p>&ldquo;${rev.text.en}&rdquo;</p>
+            <p>&ldquo;${t(rev.text)}&rdquo;</p>
             <div style="font-size: 13px; font-weight: 600; color: var(--heading);">
               ${rev.author} <span style="font-weight: 400; color: rgba(38,39,35,0.6);">· ${rev.treatmentTag}</span>
             </div>
@@ -304,31 +316,40 @@ function initDynamicSections() {
     `;
   }
 
-  // 5D. Offers (3 columns in ONE rounded panel with thin dividers)
+  // 5D. Offers (Filtered by active offer category if set)
   const offersContainer = document.getElementById('offers-container');
   if (offersContainer && content.offers) {
-    offersContainer.innerHTML = content.offers.map(off => `
-      <div class="offer-column">
-        <div>
+    const filterCat = window.activeOfferCategory || 'all';
+    const filteredOffers = content.offers.filter(off => filterCat === 'all' || off.category === filterCat || off.category === 'all');
+
+    offersContainer.innerHTML = filteredOffers.map(off => `
+      <div class="offer-column in-view">
+        <div class="offer-card-body">
           <div class="offer-bronze-line" aria-hidden="true"></div>
-          <span class="offer-badge">${off.badge.en}</span>
-          <h3 class="offer-title">${off.title.en}</h3>
-          <p class="offer-desc" style="margin-top: 8px;">${off.description.en}</p>
+          <span class="offer-badge">${t(off.badge)}</span>
+          <h3 class="offer-title">${t(off.title)}</h3>
+          <p class="offer-desc">${t(off.description)}</p>
           <ul class="offer-features">
             ${off.features.map(f => `
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <span>${f.en}</span>
+                <span>${t(f)}</span>
               </li>
             `).join('')}
           </ul>
         </div>
-        <div>
-          <div class="offer-validity">${off.validity.en}</div>
-          <a href="${window.CONFIG ? window.CONFIG.getWhatsAppUrl(off.whatsappMsg) : '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;">
-            Claim on WhatsApp
+        <div class="offer-card-footer">
+          <div class="offer-validity">
+            <svg class="offer-validity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>${t(off.validity)}</span>
+          </div>
+          <a href="${window.CONFIG ? window.CONFIG.getWhatsAppUrl(off.whatsappMsg) : '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-primary offer-cta-btn">
+            ${(window.currentLang || 'en') === 'te' ? 'వాట్సాప్‌లో బుక్ చేయండి' : 'Claim on WhatsApp'}
           </a>
         </div>
       </div>
@@ -341,28 +362,28 @@ function initDynamicSections() {
     branchesContainer.innerHTML = content.branches.map((br, idx) => {
       const mapSrc = br.mapUrl || br.mapEmbedUrl || `https://www.google.com/maps?q=${encodeURIComponent(br.area + ', Hyderabad')}&hl=en&z=14&output=embed`;
       return `
-      <div class="branch-block">
-        <h3 class="branch-title">${br.name.en}</h3>
-        <p class="branch-info-text"><strong>Area:</strong> ${br.area}</p>
-        <p class="branch-info-text"><strong>Address:</strong> ${br.address.en}</p>
-        <p class="branch-info-text"><strong>Hours:</strong> ${br.timings.en}</p>
-        <p class="branch-info-text"><strong>Phone:</strong> ${window.CONFIG ? window.CONFIG.CLINIC_PHONE_DISPLAY : '+91 00000 00000'}</p>
+      <div class="branch-block in-view">
+        <h3 class="branch-title">${t(br.name)}</h3>
+        <p class="branch-info-text"><strong>${(window.currentLang || 'en') === 'te' ? 'ప్రాంతం:' : 'Area:'}</strong> ${br.area}</p>
+        <p class="branch-info-text"><strong>${(window.currentLang || 'en') === 'te' ? 'చిరునామా:' : 'Address:'}</strong> ${t(br.address)}</p>
+        <p class="branch-info-text"><strong>${(window.currentLang || 'en') === 'te' ? 'సమయాలు:' : 'Hours:'}</strong> ${t(br.timings)}</p>
+        <p class="branch-info-text"><strong>${(window.currentLang || 'en') === 'te' ? 'ఫోన్:' : 'Phone:'}</strong> ${window.CONFIG ? window.CONFIG.CLINIC_PHONE_DISPLAY : '+91 00000 00000'}</p>
         <div class="branch-map-embed" id="map-frame-${idx}">
-          <iframe id="map-iframe-${idx}" src="${mapSrc}" title="Map of Ivory Dental Studio ${br.name.en}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe id="map-iframe-${idx}" src="${mapSrc}" title="Map of Ivory Dental Studio ${t(br.name)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           <div class="map-fallback-card" id="map-fallback-${idx}" style="display: none;" aria-live="polite">
             <div class="map-fallback-inner">
               <span class="map-fallback-pin" aria-hidden="true">📍</span>
-              <div class="map-fallback-title">${br.name.en}</div>
-              <div class="map-fallback-addr">${br.address.en}</div>
+              <div class="map-fallback-title">${t(br.name)}</div>
+              <div class="map-fallback-addr">${t(br.address)}</div>
               <a href="${br.directionsUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-compact" style="margin-top: 10px;">
-                Open in Google Maps &rarr;
+                ${(window.currentLang || 'en') === 'te' ? 'గూగుల్ మ్యాప్స్ ఓపెన్ చేయండి →' : 'Open in Google Maps &rarr;'}
               </a>
             </div>
           </div>
         </div>
         <div>
           <a href="${br.directionsUrl}" target="_blank" rel="noopener noreferrer" class="text-link">
-            Get Directions &rarr;
+            ${(window.currentLang || 'en') === 'te' ? 'దిశలు పొందండి &rarr;' : 'Get Directions &rarr;'}
           </a>
         </div>
       </div>
@@ -388,7 +409,35 @@ function initDynamicSections() {
       }, 6000);
     });
   }
+
+  // 5F. FAQs (Dynamic bilingual rendering from content.faqs)
+  const faqList = document.getElementById('faq-accordion');
+  if (faqList && content.faqs) {
+    faqList.innerHTML = content.faqs.map((faq, idx) => `
+      <div class="faq-accordion-item">
+        <button type="button" class="faq-question-btn" aria-expanded="false" id="faq-btn-${idx}">
+          <span>${t(faq.q)}</span>
+          <span class="faq-icon-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer-wrapper">
+          <div class="faq-answer-inner">
+            <div class="faq-answer-content">
+              ${t(faq.a)}
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    initFaqAccordion();
+  }
+
+  // Ensure scroll observers see any active elements
+  if (typeof window.refreshScrollObserver === 'function') {
+    window.refreshScrollObserver();
+  }
 }
+
+window.initDynamicSections = initDynamicSections;
 
 /* --------------------------------------------------------------------------
    6. Trust Counters Count-Up
@@ -451,20 +500,33 @@ function animateCountUp(elem, endVal, duration, suffix = '', decimals = 0, forma
 /* --------------------------------------------------------------------------
    7. Single IntersectionObserver for Scroll Animations
    -------------------------------------------------------------------------- */
-function initScrollAnimations() {
-  const elements = document.querySelectorAll('.fade-up-element, .section-header');
-  if (!elements.length) return;
+let globalScrollObserver = null;
 
-  const observer = new IntersectionObserver((entries) => {
+function refreshScrollObserver() {
+  const elements = document.querySelectorAll('.fade-up-element:not(.in-view)');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 100) {
+      el.classList.add('in-view');
+    } else if (globalScrollObserver) {
+      globalScrollObserver.observe(el);
+    }
+  });
+}
+window.refreshScrollObserver = refreshScrollObserver;
+
+function initScrollAnimations() {
+  globalScrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
+        globalScrollObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
-  elements.forEach(el => observer.observe(el));
+  const elements = document.querySelectorAll('.fade-up-element, .section-header');
+  elements.forEach(el => globalScrollObserver.observe(el));
 }
 
 /* --------------------------------------------------------------------------
@@ -482,47 +544,48 @@ function initTreatmentModal() {
 
   function openModal(treatmentId) {
     const treatments = (window.CONTENT && window.CONTENT.treatments) || [];
-    const t = treatments.find(item => item.id === treatmentId);
-    if (!t) return;
+    const treatItem = treatments.find(item => item.id === treatmentId);
+    if (!treatItem) return;
 
+    const isTe = (window.currentLang || 'en') === 'te';
     dynamicContent.innerHTML = `
       <div style="margin-bottom: 20px;">
         <span style="font-size: 13px; font-weight: 700; color: var(--bronze); text-transform: uppercase;">
-          Treatment Details
+          ${isTe ? 'చికిత్స వివరాలు' : 'Treatment Details'}
         </span>
-        <h2 id="modal-treatment-title" style="font-size: 1.75rem; margin-top: 6px;">${t.name.en}</h2>
+        <h2 id="modal-treatment-title" style="font-size: 1.75rem; margin-top: 6px;">${t(treatItem.name)}</h2>
         <div style="font-size: 15px; font-weight: 600; color: var(--heading); margin-top: 4px;">
-          ${t.priceRange.en}
+          ${t(treatItem.priceRange)}
           <span style="font-size: 13px; font-weight: 400; color: rgba(38,39,35,0.6); display: block;">
-            (${t.priceNote.en})
+            (${t(treatItem.priceNote)})
           </span>
         </div>
       </div>
 
       <div style="margin-bottom: 20px;">
-        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">What It Is</h3>
-        <p style="font-size: 14.5px; color: rgba(38,39,35,0.8); line-height: 1.6;">${t.whatItIs.en}</p>
+        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">${isTe ? 'చికిత్స గురించి' : 'What It Is'}</h3>
+        <p style="font-size: 14.5px; color: rgba(38,39,35,0.8); line-height: 1.6;">${t(treatItem.whatItIs)}</p>
       </div>
 
       <div style="margin-bottom: 20px;">
-        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Typical Duration</h3>
-        <p style="font-size: 14.5px; color: rgba(38,39,35,0.8);">${t.duration.en}</p>
+        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">${isTe ? 'వ్యవధి' : 'Typical Duration'}</h3>
+        <p style="font-size: 14.5px; color: rgba(38,39,35,0.8);">${t(treatItem.duration)}</p>
       </div>
 
       <div style="margin-bottom: 28px;">
-        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 10px;">Clinical Process</h3>
+        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 10px;">${isTe ? 'చికిత్సా విధానం' : 'Clinical Process'}</h3>
         <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: rgba(38,39,35,0.8);">
-          ${t.process.map(step => `<li>${step.en}</li>`).join('')}
+          ${treatItem.process.map(step => `<li>${t(step)}</li>`).join('')}
         </ol>
       </div>
 
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <button type="button" class="btn btn-primary" data-action="book-modal-treatment" data-treatment-id="${t.id}" style="flex: 1;">
-          Book this treatment
+        <button type="button" class="btn btn-primary" data-action="book-modal-treatment" data-treatment-id="${treatItem.id}" style="flex: 1;">
+          ${isTe ? 'ఈ చికిత్సను బుక్ చేయండి' : 'Book this treatment'}
           <span class="btn-arrow-icon" aria-hidden="true">&rarr;</span>
         </button>
         <button type="button" class="btn btn-secondary" id="modal-cancel-btn">
-          Close
+          ${isTe ? 'మూసివేయి' : 'Close'}
         </button>
       </div>
     `;
@@ -539,7 +602,7 @@ function initTreatmentModal() {
       bookModalBtn.addEventListener('click', () => {
         closeModal();
         if (window.bookingController) {
-          window.bookingController.selectTreatment(t.id);
+          window.bookingController.selectTreatment(treatItem.id);
         }
         const bookingCard = document.getElementById('booking-card');
         if (bookingCard) {

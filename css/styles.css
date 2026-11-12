@@ -19,6 +19,10 @@
   /* Deep charcoal body text */
   --heading: #1D1E1B;
   /* Near-black headings */
+  --text-primary: #1D1E1B;
+  /* Primary dark text */
+  --text-secondary: #5A5C54;
+  /* Secondary muted text */
   --sage: #A5AA98;
   /* Muted sage accent */
   --bronze: #A58B65;
@@ -258,7 +262,8 @@ html.js .section-header.in-view .section-label-line {
 
 .section-subtitle {
   font-size: 1.05rem;
-  color: #4A4D46;
+  font-weight: 500;
+  color: #262723;
   /* High contrast body copy */
   line-height: 1.6;
 }
@@ -1134,9 +1139,11 @@ html.js .section-header.in-view .section-label-line {
 .gallery-photo-wrap {
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 28px;
+  border-radius: 24px;
   overflow: hidden;
   background-color: var(--sage-tint);
+  border: 1px solid rgba(197, 198, 193, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .gallery-photo-wrap img {
@@ -1152,23 +1159,34 @@ html.js .section-header.in-view .section-label-line {
   }
 
   .gallery-item:hover .gallery-caption {
-    transform: translateY(-4px);
+    color: var(--bronze);
+    transform: translateY(-2px);
   }
 }
 
 .gallery-caption {
-  padding-top: 10px;
-  font-size: 14px;
-  color: rgba(38, 39, 35, 0.75);
-  font-weight: 500;
-  transition: transform 0.2s var(--ease);
+  padding-top: 12px;
+  font-family: 'Manrope', 'Noto Sans Telugu', sans-serif;
+  font-size: 15.5px;
+  color: #1D1E1B;
+  font-weight: 600;
+  line-height: 1.45;
+  transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+[lang="te"] .gallery-caption {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1D1E1B;
+  line-height: 1.5;
 }
 
 .gallery-consent-note {
-  font-size: 13.5px;
-  color: #555750;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D302A;
   text-align: center;
-  margin-top: 64px;
+  margin-top: 56px;
 }
 
 /* --------------------------------------------------------------------------
@@ -1265,65 +1283,111 @@ html.js .section-header.in-view .section-label-line {
 
 .review-subitem p {
   font-size: 14.5px;
-  color: rgba(38, 39, 35, 0.78);
+  font-weight: 500;
+  color: #1D1E1B;
   line-height: 1.55;
 }
 
 /* --------------------------------------------------------------------------
-   13. OFFERS SECTION (--bg, modern warm card on --surface, radius 24px)
+   13. OFFERS SECTION (--bg, modern 4-card grid on desktop, 2-col tablet)
    -------------------------------------------------------------------------- */
-.offers-panel {
-  background-color: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--silver);
-  border-radius: 24px;
-  padding: clamp(32px, 4vw, 56px);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 36px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+.offers-tabs-wrapper {
+  margin-bottom: 24px;
 }
 
-@media (min-width: 960px) {
+.offer-tab-btn {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-family: 'Manrope', 'Noto Sans Telugu', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  border: 1px solid var(--silver);
+  background: var(--surface);
+  color: var(--heading);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.offer-tab-btn:hover {
+  border-color: var(--heading);
+  background: rgba(38, 39, 35, 0.05);
+}
+
+.offer-tab-btn.active {
+  background: var(--heading) !important;
+  color: #FAF9F5 !important;
+  border-color: var(--heading) !important;
+  box-shadow: 0 4px 12px rgba(38, 39, 35, 0.15);
+}
+
+.offers-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+@media (min-width: 640px) {
   .offers-panel {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .offers-panel {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
 
-  .offer-column {
-    padding: 0 32px;
-    border-right: 1px solid var(--silver);
+  .offers-panel:has(> .offer-column:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
   }
 
-  .offer-column:first-child {
-    padding-left: 0;
-  }
-
-  .offer-column:last-child {
-    padding-right: 0;
-    border-right: none;
+  .offers-panel:has(> .offer-column:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 420px;
   }
 }
 
 .offer-column {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(197, 198, 193, 0.7);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 16px;
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+  position: relative;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .offer-column:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+    border-color: var(--bronze);
   }
 }
 
+.offer-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
 .offer-bronze-line {
-  width: 28px;
-  height: 2px;
+  width: 32px;
+  height: 2.5px;
   background-color: var(--bronze);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  border-radius: 2px;
 }
 
 .offer-badge {
@@ -1331,48 +1395,92 @@ html.js .section-header.in-view .section-label-line {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--bronze);
+  color: #8A6B3D;
   letter-spacing: 0.05em;
+  margin-bottom: 6px;
 }
 
 .offer-title {
-  font-size: 1.35rem;
+  font-family: 'Manrope', 'Noto Sans Telugu', sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--heading);
+  color: #1D1E1B;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+[lang="te"] .offer-title {
+  font-size: 1.15rem;
+  line-height: 1.45;
 }
 
 .offer-desc {
-  font-size: 14.5px;
-  color: #4A4D46;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D302A;
+  line-height: 1.55;
+  margin-bottom: 14px;
 }
 
 .offer-features {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 12px 0;
+  gap: 10px;
+  margin: 14px 0 18px 0;
+  padding: 0;
 }
 
 .offer-features li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
-  font-size: 14px;
-  color: var(--heading);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1D1E1B;
+  line-height: 1.45;
 }
 
 .offer-features svg {
-  width: 16px;
-  height: 16px;
-  stroke: var(--bronze);
+  width: 17px;
+  height: 17px;
+  stroke: #8A6B3D;
   flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.offer-card-footer {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(197, 198, 193, 0.65);
+  display: flex;
+  flex-direction: column;
 }
 
 .offer-validity {
-  font-size: 12.5px;
-  color: #6E7068;
-  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2D302A;
+  margin-bottom: 14px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.offer-validity-icon {
+  width: 15px;
+  height: 15px;
+  stroke: #8A6B3D;
+  flex-shrink: 0;
+}
+
+.offer-cta-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 13px 20px;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -2192,6 +2300,590 @@ html.js .fade-up-element.in-view {
   transition-delay: 240ms;
 }
 
+/* --------------------------------------------------------------------------
+   20. 24/7 AI CLINICAL ASSISTANT & PATIENT RECALL SYSTEM (PHASE 2 - FR-10, FR-11)
+   -------------------------------------------------------------------------- */
+
+/* Care Recall Banner (in Offers section) */
+.care-recall-banner {
+  background-color: var(--surface);
+  border: 1px solid var(--silver);
+  border-radius: 24px;
+  padding: clamp(20px, 3.5vw, 32px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.care-recall-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.care-recall-content {
+  flex: 1;
+  min-width: min(100%, 320px);
+}
+
+.care-recall-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bronze);
+  margin-bottom: 6px;
+}
+
+.care-recall-title {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.care-recall-desc {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.care-recall-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Chat Launcher Button (Floats above sticky mobile bar on mobile) */
+.chat-launcher-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: var(--z-float);
+  height: 48px;
+  background-color: #1D1E1B;
+  color: #FAF9F5;
+  border: 1px solid rgba(165, 139, 101, 0.45);
+  border-radius: 9999px;
+  padding: 0 18px 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(29, 30, 27, 0.22), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), background-color 0.2s var(--ease);
+}
+
+.chat-launcher-btn:hover {
+  transform: translateY(-2px);
+  background-color: #242521;
+  box-shadow: 0 12px 28px rgba(29, 30, 27, 0.24), 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chat-launcher-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.chat-launcher-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bronze);
+}
+
+.chat-launcher-text {
+  white-space: nowrap;
+}
+
+.chat-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22C55E;
+  display: inline-block;
+  position: relative;
+}
+
+.chat-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background-color: rgba(34, 197, 94, 0.4);
+  animation: pulse-ring 2s infinite ease-out;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@media (max-width: 767px) {
+  .chat-launcher-btn {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
+    height: 44px;
+    padding: 0 14px 0 12px;
+    font-size: 13px;
+  }
+}
+
+/* Chat Window Dialog */
+.chat-window {
+  position: fixed;
+  bottom: 86px;
+  right: 28px;
+  z-index: 95;
+  width: min(390px, calc(100vw - 28px));
+  height: min(580px, calc(100vh - 120px));
+  background-color: var(--surface);
+  border: 1px solid var(--silver);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px -12px rgba(29, 30, 27, 0.25), 0 6px 18px rgba(29, 30, 27, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
+}
+
+.chat-window[hidden] {
+  display: none !important;
+}
+
+.chat-window.chat-window-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+@media (max-width: 767px) {
+  .chat-window {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: min(540px, calc(100dvh - 90px));
+    border-radius: 20px;
+  }
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background-color: #FAF9F5;
+  border-bottom: 1px solid var(--silver);
+}
+
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(138, 107, 61, 0.12);
+  border: 1px solid rgba(138, 107, 61, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chat-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.chat-status {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.chat-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22C55E;
+  display: inline-block;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chat-action-btn:hover {
+  background-color: rgba(29, 30, 27, 0.06);
+  color: var(--text-primary);
+}
+
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--bg);
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  gap: 4px;
+}
+
+.chat-msg-bot {
+  align-self: flex-start;
+}
+
+.chat-msg-user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.chat-bubble {
+  padding: 12px 15px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.chat-msg-bot .chat-bubble {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--silver);
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.chat-msg-user .chat-bubble {
+  background-color: var(--text-primary);
+  color: #FCFBF8;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.chat-timestamp {
+  font-size: 10.5px;
+  color: #8F908A;
+  padding: 0 4px;
+}
+
+.chat-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 2px 0;
+}
+
+.chat-chip {
+  background-color: var(--surface);
+  border: 1px solid var(--silver);
+  border-radius: 9999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.chat-chip:hover {
+  background-color: var(--text-primary);
+  color: #FCFBF8;
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.chat-msg-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(197, 198, 193, 0.5);
+}
+
+.chat-inline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+
+.chat-typing .chat-bubble-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 16px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+  animation: typing-dot-bounce 1.3s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes typing-dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+
+.chat-footer {
+  padding: 12px 14px;
+  background-color: var(--surface);
+  border-top: 1px solid var(--silver);
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chat-input-field {
+  flex: 1;
+  height: 42px;
+  border-radius: 9999px;
+  border: 1px solid var(--silver);
+  padding: 0 16px;
+  font-size: 13.5px;
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chat-input-field:focus {
+  border-color: var(--bronze);
+  box-shadow: 0 0 0 3px rgba(138, 107, 61, 0.15);
+}
+
+.chat-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bronze);
+  color: #FFFFFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.chat-send-btn:hover {
+  background-color: #735730;
+  transform: scale(1.04);
+}
+
+.chat-footer-note {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+/* Reminder Modal Styles (FR-11) */
+.reminder-modal-dialog {
+  max-width: 520px;
+}
+
+.reminder-modal-content {
+  padding-right: 36px;
+}
+
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.reminder-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.reminder-actions .btn {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .reminder-modal-dialog {
+    padding: 24px 18px 32px 18px;
+    max-height: 88vh;
+    max-height: 88dvh;
+  }
+
+  .reminder-modal-content {
+    padding-right: 40px;
+  }
+
+  .reminder-actions {
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+}
+
+.reminder-status {
+  padding: 10px 14px;
+  background-color: #E8F5E9;
+  color: #1B5E20;
+  border: 1px solid #C8E6C9;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   21. PHASE 3 GROWTH & REGIONAL LANGUAGE (FR-12)
+   -------------------------------------------------------------------------- */
+
+/* Language Switcher (FR-12) */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--surface);
+  border: 1px solid var(--silver);
+  border-radius: 9999px;
+  padding: 3px 6px;
+  gap: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.lang-btn:hover {
+  color: var(--heading);
+}
+
+.lang-btn.active {
+  background-color: var(--heading);
+  color: #FAF9F5;
+  font-weight: 600;
+}
+
+.lang-divider {
+  font-size: 11px;
+  color: var(--silver);
+  user-select: none;
+}
+
+/* Seasonal Offers Tabs (Phase 3 Growth) */
+.offers-tabs-wrapper {
+  margin-bottom: 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.offer-tab-btn {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--silver);
+  background: var(--surface);
+  color: var(--heading);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.offer-tab-btn:hover {
+  border-color: var(--bronze);
+  transform: translateY(-1px);
+}
+
+.offer-tab-btn.active {
+  background: var(--heading) !important;
+  color: #FAF9F5 !important;
+  border-color: var(--heading) !important;
+}
+
+/* Review Star Buttons */
+.star-rating-btn:hover {
+  transform: scale(1.2);
+  color: #EAB308 !important;
+}
+
 /* Accessibility: prefers-reduced-motion bypass */
 @media (prefers-reduced-motion: reduce) {
 
@@ -2212,4 +2904,76 @@ html.js .fade-up-element.in-view {
   .section-label-line {
     transform: none !important;
   }
+}
+
+/* --------------------------------------------------------------------------
+   22. REGIONAL TELUGU TYPOGRAPHY & SCRIPT HARMONIZATION (FR-12)
+   -------------------------------------------------------------------------- */
+[lang="te"] {
+  font-family: 'Noto Sans Telugu', -apple-system, BlinkMacSystemFont, "Segoe UI", "Gautami", "Tiro Telugu", sans-serif;
+}
+
+[lang="te"] h1,
+[lang="te"] .hero-content h1 {
+  font-family: 'Noto Sans Telugu', 'Manrope', -apple-system, sans-serif !important;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem) !important;
+  line-height: 1.48 !important;
+  letter-spacing: 0 !important;
+  font-weight: 700 !important;
+  margin-bottom: 20px !important;
+  text-wrap: balance !important;
+  word-break: normal !important;
+  max-width: 24ch;
+}
+
+[lang="te"] h2 {
+  font-family: 'Noto Sans Telugu', 'Manrope', -apple-system, sans-serif !important;
+  font-size: clamp(1.5rem, 2.5vw, 2.15rem) !important;
+  line-height: 1.42 !important;
+  letter-spacing: 0 !important;
+  text-wrap: balance !important;
+}
+
+[lang="te"] h3,
+[lang="te"] h4 {
+  font-family: 'Noto Sans Telugu', 'Manrope', -apple-system, sans-serif !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0 !important;
+}
+
+[lang="te"] p,
+[lang="te"] .treatment-summary,
+[lang="te"] .section-subtitle,
+[lang="te"] .about-statement,
+[lang="te"] .hero-p {
+  line-height: 1.68 !important;
+  letter-spacing: 0 !important;
+}
+
+[lang="te"] .booking-card-title,
+[lang="te"] .booking-step-label {
+  line-height: 1.38 !important;
+  letter-spacing: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   23. DYNAMIC SECTION VISIBILITY PROTECTION
+   Ensures items populated dynamically in Doctors, Gallery, Reviews, and Offers
+   are never held at opacity: 0 by scroll animations.
+   -------------------------------------------------------------------------- */
+.doctor-item,
+.gallery-item,
+.featured-review,
+.reviews-subgrid,
+.offer-column,
+.offers-tabs-wrapper,
+#offers-container,
+#gallery-container,
+#doctors-container,
+#reviews-layout-container,
+.offers-panel,
+.gallery-grid {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
 }
